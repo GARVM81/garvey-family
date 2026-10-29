@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Garvey Family</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏡</text></svg>">
+<style>
+:root{--bg:#f7f5f0;--card:#fff;--tx:#1f2430;--mu:#6b7280;--bd:#e5e1d8;--ac:#1d4ed8;--act:#fff;--pub:#fde2e2;--sch:#dff3e7}
+@media(prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--tx:#eceef2;--mu:#9aa1ae;--bd:#2d313b;--ac:#7aa2ff;--act:#10131a;--pub:#4a2326;--sch:#1c3a2c}}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top,0px) 0 calc(76px + env(safe-area-inset-bottom,0px))}
+.w{max-width:900px;margin:0 auto;padding:14px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+h1{font-size:22px;margin:0}h2{font-size:17px;margin:18px 0 8px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:12px}
+button,input,select,textarea{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:8px 10px;max-width:100%}
+button{cursor:pointer}button.p{background:var(--ac);color:var(--act);border-color:var(--ac)}
+button.x{border:0;background:none;color:var(--mu);padding:4px 8px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.sp{justify-content:space-between}
+.chips button{border-radius:99px;padding:4px 10px;font-size:14px}
+.chips button.off{opacity:.35}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.dh{font-size:12px;color:var(--mu);text-align:center}
+.d{min-height:62px;border:1px solid var(--bd);border-radius:8px;padding:3px;font-size:11px;overflow:hidden;cursor:pointer;background:var(--card)}
+.d b{font-size:13px}.d.o{opacity:.45}.d.pub{background:var(--pub)}.d.sch{background:var(--sch)}
+.d.t b{background:var(--ac);color:var(--act);border-radius:99px;padding:0 6px}.d.s{outline:2px solid var(--ac)}
+.e{border-left:3px solid;padding-left:3px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:3px}
+.b{display:inline-block;border-radius:99px;padding:1px 8px;font-size:12px;color:#fff;margin-right:3px}
+.lg span{font-size:12px;margin-right:10px;color:var(--mu)}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+.li{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)}.li:last-child{border:0}.li .g{flex:1}
+.done .g{text-decoration:line-through;color:var(--mu)}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;border:0;background:none;font-size:12px;color:var(--mu);padding:4px}nav button.a{color:var(--ac);font-weight:600}nav span{display:block;font-size:20px}
+input[type=text],input:not([type]),textarea{width:100%}.f{flex:1;min-width:120px}
+.big{font-size:28px;font-weight:700}
+@media(max-width:560px){.d{min-height:52px}.e{font-size:10px}}
+</style></head>
+<body><div class="w"><header><h1 id="ti"></h1><button id="lg"></button></header><div id="app"></div></div><nav id="nav"></nav>
+<script>
+const M=[{id:'c',n:'Charlotte',c:'#e11d48'},{id:'m',n:'Marcel',c:'#2563eb'},{id:'l',n:'Lilliah',c:'#d97706'},{id:'n',n:'Nasir',c:'#059669'},{id:'b',n:'Lebron',c:'#7c3aed'},{id:'k',n:'Nakoa',c:'#0891b2'}];
+const MM=Object.fromEntries(M.map(m=>[m.id,m]));
+const T={en:{ti:'Garvey Family',cal:'Calendar',shop:'Shopping',din:'Dinner',ch:'Chores',more:'More',all:'Everyone',work:'💼 Work',school:'🎒 School',activity:'⚽ Activity',birthday:'🎂 Birthday',other:'📌 Other',add:'Add',title:'Title',date:'Date',time:'Time',type:'Type',rep:'Repeat',r_n:'Once',r_w:'Every week',r_y:'Every year',until:'Until (optional)',who:'Who',today:'Today',nothing:'Nothing planned.',pub:'Public holiday',sch:'School holiday (Zone C)',item:'Item to buy…',clear:'Clear ticked',cook:'Cook',meal:'What’s for dinner?',chore:'New chore…',pts:'Points',reset:'New week (bank points)',board:'Leaderboard',next:'Next school holiday',on:'On holiday until',in:'in',days:'days',nh:'Next public holiday',notes:'Family notice board',note:'Write a note…',bk:'Backup & restore',exp:'Show backup',imp:'Restore from text',bkh:'Data is saved on this device only. Copy the backup text to move it to another phone.',zone:'Zone C school holidays are built in (2026–2027).',del:'Delete',prev:'Previous',nxt:'Next',wk:'Week of'},
+fr:{ti:'Famille Garvey',cal:'Agenda',shop:'Courses',din:'Dîner',ch:'Tâches',more:'Plus',all:'Tout le monde',work:'💼 Travail',school:'🎒 École',activity:'⚽ Activité',birthday:'🎂 Anniversaire',other:'📌 Autre',add:'Ajouter',title:'Titre',date:'Date',time:'Heure',type:'Type',rep:'Répétition',r_n:'Une fois',r_w:'Chaque semaine',r_y:'Chaque année',until:'Jusqu’au (facultatif)',who:'Qui',today:'Aujourd’hui',nothing:'Rien de prévu.',pub:'Jour férié',sch:'Vacances scolaires (Zone C)',item:'Article à acheter…',clear:'Effacer les cochés',cook:'Cuisinier',meal:'Que mange-t-on ?',chore:'Nouvelle tâche…',pts:'Points',reset:'Nouvelle semaine (garder les points)',board:'Classement',next:'Prochaines vacances scolaires',on:'En vacances jusqu’au',in:'dans',days:'jours',nh:'Prochain jour férié',notes:'Tableau d’affichage',note:'Écrire un mot…',bk:'Sauvegarde et restauration',exp:'Afficher la sauvegarde',imp:'Restaurer depuis le texte',bkh:'Les données restent sur cet appareil. Copiez le texte de sauvegarde pour les transférer sur un autre téléphone.',zone:'Les vacances scolaires de la Zone C sont incluses (2026–2027).',del:'Supprimer',prev:'Précédent',nxt:'Suivant',wk:'Semaine du'}};
+const PUB=[['2026-11-01','All Saints’ Day','Toussaint'],['2026-11-11','Armistice Day','Armistice 1918'],['2026-12-25','Christmas Day','Noël'],['2027-01-01','New Year’s Day','Jour de l’An'],['2027-03-29','Easter Monday','Lundi de Pâques'],['2027-05-01','Labour Day','Fête du Travail'],['2027-05-06','Ascension Day','Ascension'],['2027-05-08','Victory in Europe Day','Victoire 1945'],['2027-05-17','Whit Monday','Lundi de Pentecôte'],['2027-07-14','Bastille Day','Fête nationale'],['2027-08-15','Assumption','Assomption']];
+const SCH=[['2026-07-04','2026-08-31','Summer holidays','Vacances d’été'],['2026-10-17','2026-11-01','All Saints’ holidays','Vacances de la Toussaint'],['2026-12-19','2027-01-03','Christmas holidays','Vacances de Noël'],['2027-02-06','2027-02-21','Winter holidays','Vacances d’hiver'],['2027-04-03','2027-04-18','Spring holidays','Vacances de printemps'],['2027-05-07','2027-05-07','Ascension bridge (no school)','Pont de l’Ascension (pas d’école)'],['2027-07-03','2027-08-31','Summer holidays','Vacances d’été']];
+const KEY='garvey-family-v1',p2=n=>String(n).padStart(2,'0'),iso=d=>d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()),pd=s=>new Date(s+'T12:00:00'),uid=()=>Math.random().toString(36).slice(2,9);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let S={lang:(navigator.language||'en').startsWith('fr')?'fr':'en',ev:[],shop:[],din:{},ch:[],pts:{},notes:[]};
+try{Object.assign(S,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const t=k=>T[S.lang][k]||k,loc=()=>S.lang==='fr'?'fr-FR':'en-GB',fmt=(d,o)=>pd(d).toLocaleDateString(loc(),o);
+const today=iso(new Date());let tab='cal',sel=today,vy=+today.slice(0,4),vm=+today.slice(5,7)-1,hid=[],dw=0,bk='';
+const schH=d=>SCH.find(r=>d>=r[0]&&d<=r[1]),pubH=d=>PUB.find(r=>r[0]===d),L=(r,i)=>S.lang==='fr'?r[i+1]:r[i];
+function evOn(e,d){if(d<e.date||(e.until&&d>e.until))return false;
+ if(e.rep==='w'){if(pd(d).getDay()!==pd(e.date).getDay())return false;if(e.type==='school'&&schH(d))return false;return true}
+ if(e.rep==='y')return d.slice(5)===e.date.slice(5);return d===e.date}
+const evs=d=>S.ev.filter(e=>evOn(e,d)&&e.m.some(x=>!hid.includes(x))).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
+const badge=ids=>(ids.length===6?`<span class="b" style="background:#475569">${t('all')}</span>`:ids.map(i=>`<span class="b" style="background:${MM[i].c}">${MM[i].n}</span>`).join(''));
+const mOpts=(sel2)=>M.map(m=>`<option value="${m.id}"${m.id===sel2?' selected':''}>${m.n}</option>`).join('');
+
+function vCal(){
+ const first=new Date(vy,vm,1),off=(first.getDay()+6)%7,st=new Date(vy,vm,1-off);
+ let h=`<div class="chips row" style="margin-bottom:10px">${M.map(m=>`<button data-a="flt" data-i="${m.id}" class="${hid.includes(m.id)?'off':''}" style="border-color:${m.c}"><span class="dot" style="background:${m.c}"></span>${m.n}</button>`).join('')}</div>
+ <div class="card"><div class="row sp" style="margin-bottom:8px"><button data-a="mo" data-n="-1" aria-label="${t('prev')}">‹</button><b style="text-transform:capitalize">${new Date(vy,vm,1).toLocaleDateString(loc(),{month:'long',year:'numeric'})}</b><span class="row"><button data-a="td">${t('today')}</button><button data-a="mo" data-n="1" aria-label="${t('nxt')}">›</button></span></div><div class="grid">`;
+ for(let i=0;i<7;i++)h+=`<div class="dh">${new Date(2024,0,1+i).toLocaleDateString(loc(),{weekday:'short'})}</div>`;
+ for(let i=0;i<42;i++){const D=new Date(st);D.setDate(st.getDate()+i);const d=iso(D),e=evs(d),c=['d'];
+  if(D.getMonth()!==vm)c.push('o');if(schH(d))c.push('sch');if(pubH(d)||D.getDay()===0&&0)c.push('pub');if(d===today)c.push('t');if(d===sel)c.push('s');
+  h+=`<div class="${c.join(' ')}" data-a="sel" data-d="${d}"><b>${D.getDate()}</b>${e.slice(0,2).map(x=>`<div class="e" style="border-color:${MM[x.m[0]].c}">${esc(x.title)}</div>`).join('')}${e.length>2?`<div class="e" style="border-color:transparent">+${e.length-2}</div>`:''}</div>`}
+ h+=`</div><div class="lg" style="margin-top:8px"><span><i style="background:var(--pub)"></i>${t('pub')}</span><span><i style="background:var(--sch)"></i>${t('sch')}</span></div></div>`;
+ const ph=pubH(sel),sh=schH(sel),list=evs(sel);
+ h+=`<div class="card"><h2 style="margin-top:0;text-transform:capitalize">${fmt(sel,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</h2>
+ ${ph?`<div>🇫🇷 <b>${L(ph,1)}</b> · ${t('pub')}</div>`:''}${sh?`<div>🏖️ <b>${L(sh,2)}</b> · ${t('sch')}</div>`:''}
+ ${list.length?list.map(e=>`<div class="li"><div class="g"><b>${e.time?esc(e.time)+' · ':''}${esc(e.title)}</b> <small>${t(e.type)}${e.rep!=='n'?' · '+t('r_'+e.rep):''}</small><div>${badge(e.m)}</div></div><button class="x" data-a="dev" data-i="${e.id}" aria-label="${t('del')}">✕</button></div>`).join(''):`<p style="color:var(--mu)">${t('nothing')}</p>`}</div>
+ <form class="card" data-f="ev"><div class="row"><input class="f" name="title" placeholder="${t('title')}" required><input name="date" type="date" value="${sel}" required><input name="time" type="time"></div>
+ <div class="row" style="margin-top:8px"><select name="type">${['work','school','activity','birthday','other'].map(k=>`<option value="${k}">${t(k)}</option>`).join('')}</select><select name="rep">${['n','w','y'].map(k=>`<option value="${k}">${t('r_'+k)}</option>`).join('')}</select><label>${t('until')} <input name="until" type="date"></label></div>
+ <div class="chips row" style="margin:8px 0">${M.map(m=>`<label><input type="checkbox" name="m" value="${m.id}"> <span class="b" style="background:${m.c}">${m.n}</span></label>`).join('')}</div>
+ <button class="p">${t('add')}</button> <small style="color:var(--mu)">${t('who')}: ${t('all')} ←</small></form>`;return h}
+
+function vShop(){return `<form class="row" data-f="shop"><input class="f" name="t" placeholder="${t('item')}" required><button class="p">${t('add')}</button></form>
+ <div class="card" style="margin-top:12px">${S.shop.map(i=>`<div class="li ${i.done?'done':''}"><input type="checkbox" data-a="shd" data-i="${i.id}" ${i.done?'checked':''}><span class="g">${esc(i.t)}</span><button class="x" data-a="dsh" data-i="${i.id}">✕</button></div>`).join('')||`<p style="color:var(--mu)">🛒 —</p>`}</div>
+ ${S.shop.some(i=>i.done)?`<button data-a="csh">${t('clear')}</button>`:''}`}
+
+function vDin(){const s=pd(today);s.setDate(s.getDate()-((s.getDay()+6)%7)+dw*7);
+ let h=`<div class="row sp" style="margin-bottom:10px"><button data-a="dw" data-n="-1">‹</button><b>${t('wk')} ${fmt(iso(s),{day:'numeric',month:'long'})}</b><button data-a="dw" data-n="1">›</button></div>`;
+ for(let i=0;i<7;i++){const D=new Date(s);D.setDate(s.getDate()+i);const d=iso(D),v=S.din[d]||{};
+  h+=`<div class="card"><div class="row sp"><b style="text-transform:capitalize">${fmt(d,{weekday:'long',day:'numeric'})}${d===today?' ⭐':''}</b><select data-dc="${d}"><option value="">${t('cook')}…</option>${mOpts(v.c)}</select></div><input data-dm="${d}" value="${esc(v.m)}" placeholder="${t('meal')}" style="margin-top:6px"></div>`}return h}
+
+function pts(id){return (S.pts[id]||0)+S.ch.filter(c=>c.done&&c.who===id).reduce((a,c)=>a+c.p,0)}
+function vCh(){const lb=M.map(m=>[m,pts(m.id)]).sort((a,b)=>b[1]-a[1]);
+ return `<form class="row" data-f="ch"><input class="f" name="t" placeholder="${t('chore')}" required><select name="w">${mOpts()}</select><input name="p" type="number" min="1" max="20" value="2" style="width:70px" title="${t('pts')}"><button class="p">${t('add')}</button></form>
+ <div class="card" style="margin-top:12px">${S.ch.map(c=>`<div class="li ${c.done?'done':''}"><input type="checkbox" data-a="chd" data-i="${c.id}" ${c.done?'checked':''}><span class="g">${esc(c.t)} <span class="b" style="background:${MM[c.who].c}">${MM[c.who].n}</span> <small>+${c.p}</small></span><button class="x" data-a="dch" data-i="${c.id}">✕</button></div>`).join('')||'<p style="color:var(--mu)">🧹 —</p>'}</div>
+ ${S.ch.length?`<button data-a="rch">${t('reset')}</button>`:''}
+ <h2>🏆 ${t('board')}</h2><div class="card">${lb.map(([m,p],i)=>`<div class="li"><span>${['🥇','🥈','🥉'][i]||'·'}</span><span class="g"><span class="dot" style="background:${m.c}"></span>${m.n}</span><b>${p} ${t('pts')}</b></div>`).join('')}</div>`}
+
+function vMore(){const cur=schH(today),nx=SCH.find(r=>r[0]>today),nh=PUB.find(r=>r[0]>=today),dd=d=>Math.round((pd(d)-pd(today))/864e5);
+ return `<div class="card"><h2 style="margin-top:0">🏖️ ${t('next')}</h2>${cur?`<div class="big">${t('on')} ${fmt(cur[1],{day:'numeric',month:'long'})}</div><div>${L(cur,2)}</div>`:''}
+ ${nx?`<div style="margin-top:6px"><b>${L(nx,2)}</b> — ${t('in')} ${dd(nx[0])} ${t('days')} (${fmt(nx[0],{day:'numeric',month:'long',year:'numeric'})})</div>`:''}
+ ${nh?`<div style="margin-top:6px">🇫🇷 ${t('nh')}: <b>${L(nh,1)}</b> — ${fmt(nh[0],{weekday:'long',day:'numeric',month:'long'})}</div>`:''}<small style="color:var(--mu)">${t('zone')}</small></div>
+ <h2>📝 ${t('notes')}</h2><form class="row" data-f="note"><input class="f" name="t" placeholder="${t('note')}" required><button class="p">${t('add')}</button></form>
+ <div class="card" style="margin-top:8px">${S.notes.map(n=>`<div class="li"><span class="g">${esc(n.t)}</span><button class="x" data-a="dno" data-i="${n.id}">✕</button></div>`).join('')||'<p style="color:var(--mu)">—</p>'}</div>
+ <h2>💾 ${t('bk')}</h2><div class="card"><p style="margin-top:0;color:var(--mu)">${t('bkh')}</p><div class="row"><button data-a="exp">${t('exp')}</button><button data-a="imp">${t('imp')}</button></div><textarea id="bk" rows="4" style="margin-top:8px">${esc(bk)}</textarea></div>`}
+
+const TABS=[['cal','📅',vCal],['shop','🛒',vShop],['din','🍽️',vDin],['ch','🧹',vCh],['more','✨',vMore]];
+function render(){document.documentElement.lang=S.lang;document.title=t('ti');$('#ti').textContent='🏡 '+t('ti');$('#lg').textContent=S.lang==='fr'?'🇬🇧 English':'🇫🇷 Français';
+ $('#app').innerHTML=TABS.find(x=>x[0]===tab)[2]();
+ $('#nav').innerHTML=TABS.map(x=>`<button data-a="tab" data-t="${x[0]}" class="${x[0]===tab?'a':''}"><span>${x[1]}</span>${t(x[0])}</button>`).join('')}
+function $(s){return document.querySelector(s)}
+const A={
+ tab:d=>{tab=d.t},sel:d=>{sel=d.d},td:()=>{sel=today;vy=+today.slice(0,4);vm=+today.slice(5,7)-1},
+ mo:d=>{vm+=+d.n;if(vm<0){vm=11;vy--}if(vm>11){vm=0;vy++}},dw:d=>{dw+=+d.n},
+ flt:d=>{hid=hid.includes(d.i)?hid.filter(x=>x!==d.i):[...hid,d.i]},
+ dev:d=>{S.ev=S.ev.filter(e=>e.id!==d.i)},shd:d=>{const i=S.shop.find(x=>x.id===d.i);i.done=!i.done},dsh:d=>{S.shop=S.shop.filter(x=>x.id!==d.i)},csh:()=>{S.shop=S.shop.filter(x=>!x.done)},
+ chd:d=>{const c=S.ch.find(x=>x.id===d.i);c.done=!c.done},dch:d=>{S.ch=S.ch.filter(x=>x.id!==d.i)},
+ rch:()=>{S.ch.forEach(c=>{if(c.done){S.pts[c.who]=(S.pts[c.who]||0)+c.p;c.done=false}})},
+ dno:d=>{S.notes=S.notes.filter(x=>x.id!==d.i)},exp:()=>{bk=JSON.stringify(S)},
+ imp:()=>{try{const o=JSON.parse($('#bk').value);S=Object.assign(S,o)}catch(e){}}};
+document.addEventListener('click',e=>{const a=e.target.closest('[data-a]');if(!a||a.type==='checkbox'&&e.type==='click'&&false)return;if(a.id==='lg')return;A[a.dataset.a]?.(a.dataset);save();render()});
+$('#lg').onclick=()=>{S.lang=S.lang==='fr'?'en':'fr';save();render()};
+document.addEventListener('submit',e=>{e.preventDefault();const f=e.target,k=f.dataset.f,v=new FormData(f);
+ if(k==='ev'){const m=v.getAll('m');S.ev.push({id:uid(),title:v.get('title'),date:v.get('date'),time:v.get('time'),type:v.get('type'),rep:v.get('rep'),until:v.get('until'),m:m.length?m:M.map(x=>x.id)});sel=v.get('date');vy=+sel.slice(0,4);vm=+sel.slice(5,7)-1}
+ if(k==='shop')S.shop.push({id:uid(),t:v.get('t'),done:false});
+ if(k==='ch')S.ch.push({id:uid(),t:v.get('t'),who:v.get('w'),p:+v.get('p')||1,done:false});
+ if(k==='note')S.notes.unshift({id:uid(),t:v.get('t')});
+ save();render()});
+document.addEventListener('change',e=>{const el=e.target;
+ if(el.dataset.dm!==undefined){(S.din[el.dataset.dm]??={}).m=el.value;save()}
+ if(el.dataset.dc!==undefined){(S.din[el.dataset.dc]??={}).c=el.value;save()}});
+render();
+</script></body></html>
