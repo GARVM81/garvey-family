@@ -8,3 +8,10 @@ alter table messages enable row level security;
 create or replace function get_messages(p_code text, p_after bigint) returns setof messages language sql security definer set search_path=public as $$ select * from messages where code=p_code and length(p_code)>=12 and id>p_after order by id desc limit 100 $$;
 create or replace function post_message(p_code text, p_sender text, p_body text, p_kind text, p_ts bigint) returns void language sql security definer set search_path=public as $$ insert into messages(code,sender,body,kind,ts) select p_code,p_sender,p_body,p_kind,p_ts where length(p_code)>=12 and length(p_body)<400000 $$;
 grant execute on function get_family(text), put_family(text,text,bigint), get_messages(text,bigint), post_message(text,text,text,text,bigint) to anon;
+
+create table if not exists locations(code text not null, member text not null, lat double precision not null, lon double precision not null, acc real, ts bigint not null, primary key(code, member));
+alter table locations enable row level security;
+create or replace function put_location(p_code text, p_member text, p_lat double precision, p_lon double precision, p_acc real, p_ts bigint) returns void language sql security definer set search_path=public as $$ insert into locations(code,member,lat,lon,acc,ts) select p_code,p_member,p_lat,p_lon,p_acc,p_ts where length(p_code)>=12 on conflict(code,member) do update set lat=excluded.lat, lon=excluded.lon, acc=excluded.acc, ts=excluded.ts $$;
+create or replace function get_locations(p_code text) returns setof locations language sql security definer set search_path=public as $$ select * from locations where code=p_code and length(p_code)>=12 $$;
+create or replace function stop_location(p_code text, p_member text) returns void language sql security definer set search_path=public as $$ delete from locations where code=p_code and member=p_member and length(p_code)>=12 $$;
+grant execute on function put_location(text,text,double precision,double precision,real,bigint), get_locations(text), stop_location(text,text) to anon;
