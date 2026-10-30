@@ -1,0 +1,10 @@
+create table if not exists families(code text primary key, data text not null, u bigint not null);
+alter table families enable row level security;
+create or replace function get_family(p_code text) returns table(data text, u bigint) language sql security definer set search_path=public as $$ select data, u from families where code=p_code and length(p_code)>=12 $$;
+create or replace function put_family(p_code text, p_data text, p_u bigint) returns void language sql security definer set search_path=public as $$ insert into families(code,data,u) select p_code,p_data,p_u where length(p_code)>=12 on conflict(code) do update set data=excluded.data, u=excluded.u $$;
+create table if not exists messages(id bigserial primary key, code text not null, sender text not null, body text not null, kind text not null default 'text', ts bigint not null);
+create index if not exists messages_code_id on messages(code, id);
+alter table messages enable row level security;
+create or replace function get_messages(p_code text, p_after bigint) returns setof messages language sql security definer set search_path=public as $$ select * from messages where code=p_code and length(p_code)>=12 and id>p_after order by id desc limit 100 $$;
+create or replace function post_message(p_code text, p_sender text, p_body text, p_kind text, p_ts bigint) returns void language sql security definer set search_path=public as $$ insert into messages(code,sender,body,kind,ts) select p_code,p_sender,p_body,p_kind,p_ts where length(p_code)>=12 and length(p_body)<400000 $$;
+grant execute on function get_family(text), put_family(text,text,bigint), get_messages(text,bigint), post_message(text,text,text,text,bigint) to anon;
