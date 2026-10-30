@@ -1,4 +1,4 @@
-# 🏡 Garvey Family
+# 🏡 Garvey Family Hub
 
 A family super app in one static web page: **calendar + chat + smart home dashboard**, installable on iPhone and Android, hosted free on GitHub Pages.
 
@@ -51,5 +51,24 @@ The dashboard starts in demo mode. To control real devices:
 ## Development
 Edit `index.html`, commit, push. Use Issues for bugs and ideas, and Pull Requests for changes. Version is in `index.html` (`VER`) and `CHANGELOG.md`.
 
+## Modules (Family Hub concept)
+| Module | In the app |
+|---|---|
+| Family | Calendar, birthdays, school, leave, appointments |
+| Messaging | Chat with photos and voice (More → Sync → Supabase) |
+| Shopping / Tasks | Lists, chores with points, reminders |
+| Smart home | Tiles, cameras, alarm, wall display (📺 on Home) |
+| House | Maintenance, equipment and warranties, documents (More → House) |
+| Money | Shared expenses, monthly budget, bills (More → Money / Bills) |
+| Family map | More → Map: each person opts in to share their location on one shared map (Supabase) |
+| Quick assistant | Home → Quick add, e.g. "add milk to shopping" (rule-based, not cloud AI) |
+| GitHub | This repository: issues, releases, Actions |
+
+## Connecting UniFi, Shelly, Control4, pool and heating
+Connect each system to Home Assistant using its built-in integration (UniFi Network / Protect, Shelly, Control4, your pool controller and heating). Then add the entity IDs as tiles. Cameras: add a tile of type Camera with an ID like `camera.front_door`.
+
+## Weather
+Uses the free Open-Meteo service. Default location is Lavaur. Change it with `localStorage.setItem('garvey-geo', JSON.stringify({lat:43.7,lon:1.82,n:'Lavaur'}))`.
+
 ## Roadmap
-Push notifications when the app is closed (server needed), Firebase chat, per-person logins, energy charts, meal recipes, shared photo albums.
+Push notifications when the app is closed (server needed), real AI assistant through a server function, Firebase chat, per-person logins, energy charts, meal recipes, shared photo albums.
