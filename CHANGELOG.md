@@ -1,4 +1,8 @@
 # Changelog
+## 2.3.1
+- Remember this device: code asked once per phone
+## 2.3.0
+- Lock screen with personal 6-digit codes, biometric unlock, auto-lock, Security settings
 ## 2.2.0
 - Family map (opt-in location sharing, OpenStreetMap + Leaflet)
 - Fix: internal helper renamed so it does not clash with Leaflet

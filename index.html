@@ -6,6 +6,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏡</text></svg>">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
 <style>
+body:not(.ok) .w,body:not(.ok) nav,body:not(.ok) #wallv{display:none!important}
 :root{--bg:#f7f5f0;--card:#fff;--tx:#1f2430;--mu:#6b7280;--bd:#e5e1d8;--ac:#1d4ed8;--act:#fff;--pub:#fde2e2;--sch:#dff3e7}
 @media(prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--tx:#eceef2;--mu:#9aa1ae;--bd:#2d313b;--ac:#7aa2ff;--act:#10131a;--pub:#4a2326;--sch:#1c3a2c}}
 *{box-sizing:border-box}
@@ -38,7 +39,7 @@ input[type=text],input:not([type]),textarea{width:100%}.f{flex:1;min-width:120px
 .big{font-size:28px;font-weight:700}
 @media(max-width:560px){.d{min-height:52px}.e{font-size:10px}}
 </style></head>
-<body><div class="w"><header><h1 id="ti"></h1><button id="lg"></button></header><div id="app"></div></div><nav id="nav"></nav>
+<body><div id="lock" style="position:fixed;inset:0;z-index:100;background:var(--bg);overflow:auto;color:var(--tx)"></div><div class="w"><header><h1 id="ti"></h1><button id="lg"></button></header><div id="app"></div></div><nav id="nav"></nav>
 <script>
 const M=[{id:'c',n:'Charlotte',c:'#e11d48'},{id:'m',n:'Marcel',c:'#2563eb'},{id:'l',n:'Lilliah',c:'#d97706'},{id:'n',n:'Nasir',c:'#059669'},{id:'b',n:'Lebron',c:'#7c3aed'},{id:'k',n:'Nakoa',c:'#0891b2'}];
 const MM=Object.fromEntries(M.map(m=>[m.id,m]));
@@ -155,8 +156,8 @@ function notify(){if(!('Notification' in window)||Notification.permission!=='gra
 const row=i=>`<div class="li"><span class="g">${esc(i.txt)}</span><b>${when(i.k)}</b></div>`;
 function dueCard(){const it=items();return it.length?`<div class="card"><b>🔔 ${t('upc')}</b>${it.slice(0,5).map(row).join('')}</div>`:''}
 const _vCal=vCal;vCal=function(){return banner()+dueCard()+_vCal()};TABS[0][2]=vCal;
-let sub='bd';const SUBS=[['bd','🎂'],['ap','🩺'],['bill','💶'],['con','📞'],['rem','🔔'],['misc','📝'],['sync','☁️'],['map','📍'],['house','🔧'],['fin','💰'],['fam','📷'],['dev','🛠️']];
-function vMore2(){return `<div class="chips row" style="margin-bottom:12px">${SUBS.map(s=>`<button data-a="sub" data-s="${s[0]}" class="${s[0]===sub?'p':''}">${s[1]} ${t(s[0])}</button>`).join('')}</div>`+({bd:vBd,ap:vAp,bill:vBill,con:vCon,rem:vRem,misc:vMore,sync:vSync,fam:vFam,dev:vDev,map:vMap,house:vHouse,fin:vFin}[sub])()}
+let sub='bd';const SUBS=[['bd','🎂'],['ap','🩺'],['bill','💶'],['con','📞'],['rem','🔔'],['misc','📝'],['sync','☁️'],['sec','🔒'],['map','📍'],['house','🔧'],['fin','💰'],['fam','📷'],['dev','🛠️']];
+function vMore2(){return `<div class="chips row" style="margin-bottom:12px">${SUBS.map(s=>`<button data-a="sub" data-s="${s[0]}" class="${s[0]===sub?'p':''}">${s[1]} ${t(s[0])}</button>`).join('')}</div>`+({bd:vBd,ap:vAp,bill:vBill,con:vCon,rem:vRem,misc:vMore,sync:vSync,fam:vFam,dev:vDev,sec:vSec,map:vMap,house:vHouse,fin:vFin}[sub])()}
 TABS[4][2]=vMore2;
 function vBd(){const l=S.bd.map(b=>[b,nxt(b)]).sort((a,b)=>a[1].localeCompare(b[1]));
  return `<form class="row" data-f="bd"><input class="f" name="n" placeholder="${t('name')}" required><label>${t('born')} <input type="date" name="d" required></label><button class="p">${t('add')}</button></form><div class="card" style="margin-top:12px">${l.map(([b,d])=>`<div class="li"><span class="g">🎂 <b>${esc(b.name)}</b> <small>${fmt(b.date,{day:'numeric',month:'long',year:'numeric'})} · ${t('turns')} ${age(b,d)}</small></span><b>${dd(d)===0?'🎉':dd(d)+' '+t('days')}</b><button class="x" data-a="dbd" data-i="${b.id}">✕</button></div>`).join('')}</div><small style="color:var(--mu)">${t('bdh')}</small>`}
@@ -216,7 +217,7 @@ if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(
 cloudInit();save();render();notify();setInterval(notify,3e5);document.addEventListener('visibilitychange',()=>{if(!document.hidden)notify()});
 </script>
 <script>
-const VER='2.2.0';
+const VER='2.3.1';
 Object.assign(T.en,{home:'Home',chat:'Chat',lists:'Lists',dev:'About',sh:'Smart home',buy:'to buy',left:'chores left',tonight:'Tonight',nop:'Not planned',demo:'Demo mode. Connect Home Assistant (⚙️) to control your real devices.',hurl:'Home Assistant URL (https://…)',htok:'Long-lived access token',hoff:'Disconnect',hbad:'Cannot reach Home Assistant. Check the URL, token and CORS settings.',hh:'Needs an https address (Nabu Casa, Cloudflare Tunnel or Tailscale) and this site added to cors_allowed_origins. The token stays on this phone only.',adddv:'Add device',ent:'Entity ID (e.g. light.salon)',ctl:'Control',sen:'Sensor',whoami:'Who are you?',msg:'Message…',send:'Send',needsb:'Chat needs Supabase sync: open More → Sync, set it up and run the updated SQL.',inv:'Invite on WhatsApp',repo:'GitHub repository URL (https://github.com/…)',bug:'Report a bug',idea:'Suggest an idea',devh:'Family super app: calendar, chat, smart home and more. Code and ideas live on GitHub.',gm:'Good morning',ga:'Good afternoon',ge:'Good evening',big:'Too long. Try a shorter one.',nomsg:'No messages yet. Say hello 👋',agenda:'Today'});
 Object.assign(T.fr,{home:'Maison',chat:'Messages',lists:'Listes',dev:'À propos',sh:'Maison connectée',buy:'à acheter',left:'tâches restantes',tonight:'Ce soir',nop:'Pas prévu',demo:'Mode démo. Connectez Home Assistant (⚙️) pour piloter vos vrais appareils.',hurl:'URL Home Assistant (https://…)',htok:'Jeton d’accès longue durée',hoff:'Déconnecter',hbad:'Home Assistant est injoignable. Vérifiez l’URL, le jeton et les réglages CORS.',hh:'Il faut une adresse https (Nabu Casa, Cloudflare Tunnel ou Tailscale) et ce site ajouté à cors_allowed_origins. Le jeton reste sur ce téléphone uniquement.',adddv:'Ajouter un appareil',ent:'ID d’entité (ex. light.salon)',ctl:'Commande',sen:'Capteur',whoami:'Qui êtes-vous ?',msg:'Message…',send:'Envoyer',needsb:'Les messages nécessitent la synchro Supabase : ouvrez Plus → Synchro, configurez-la et exécutez le SQL mis à jour.',inv:'Inviter sur WhatsApp',repo:'URL du dépôt GitHub (https://github.com/…)',bug:'Signaler un bug',idea:'Proposer une idée',devh:'Super appli famille : agenda, messages, maison connectée et plus. Le code et les idées sont sur GitHub.',gm:'Bonjour',ga:'Bon après-midi',ge:'Bonsoir',big:'Trop long. Essayez plus court.',nomsg:'Pas encore de messages. Dites bonjour 👋',agenda:'Aujourd’hui'});
 const SL={en:{on:'On',off:'Off',locked:'Locked',unlocked:'Unlocked',open:'Open',closed:'Closed',armed_away:'Armed',disarmed:'Off'},fr:{on:'Allumé',off:'Éteint',locked:'Verrouillée',unlocked:'Déverrouillée',open:'Ouvert',closed:'Fermé',armed_away:'Armée',disarmed:'Désarmée'}};
@@ -353,4 +354,57 @@ const _r3=render;render=function(){_r3();if(tab==='more'&&sub==='map')mountMap()
 setInterval(pullLocs,2e4);document.addEventListener('visibilitychange',()=>{if(!document.hidden)pullLocs()});
 if(SHARE&&ME)startWatch();
 render();
+</script>
+<script>
+Object.assign(T.en,{remember:'Remember this device',rememberh:'The code is asked only once on this phone. Turn off to ask for the code every time the app opens. Anyone holding this unlocked phone can open the app.',sec:'Security',enter:'Enter your code',create:'Create your 6-digit code',repeat:'Repeat your code',mism:'Codes do not match. Try again.',wrong:'Wrong code',waitn:'Too many tries. Wait {n} s.',forgot:'Forgot your code?',fgc:'Enter the family sync code to reset your access code:',fgno:'Cannot reset without sync. Clear this site’s data in your phone settings.',fgbad:'Wrong family code.',bio:'Unlock with Face ID / fingerprint',bioask:'Use Face ID / fingerprint to unlock on this phone?',bioon:'Biometric unlock is on for this phone',biooff:'Turn off',bioen:'Turn on Face ID / fingerprint',nobio:'Biometrics are not available on this phone or browser.',lockn:'Lock now',autol:'Auto-lock',imm:'Immediately',m1:'After 1 minute',m5:'After 5 minutes',m15:'After 15 minutes',never:'Never',curc:'Current code',newc:'New code (6 digits)',chg:'Change code',signed:'Signed in as',secn:'Each person has a 6-digit code that identifies them and locks the app on this phone. Real data protection comes from your secret family code, so keep it private.',chgd:'Code changed.',back:'Back',conn:'Connecting…'});
+Object.assign(T.fr,{remember:'Mémoriser cet appareil',rememberh:'Le code n’est demandé qu’une seule fois sur ce téléphone. Désactivez pour demander le code à chaque ouverture. Toute personne qui tient ce téléphone déverrouillé peut ouvrir l’appli.',sec:'Sécurité',enter:'Entrez votre code',create:'Créez votre code à 6 chiffres',repeat:'Répétez votre code',mism:'Les codes ne correspondent pas. Réessayez.',wrong:'Code incorrect',waitn:'Trop d’essais. Attendez {n} s.',forgot:'Code oublié ?',fgc:'Entrez le code famille de synchro pour réinitialiser votre code d’accès :',fgno:'Impossible sans synchro. Effacez les données de ce site dans les réglages du téléphone.',fgbad:'Code famille incorrect.',bio:'Déverrouiller avec Face ID / empreinte',bioask:'Utiliser Face ID / l’empreinte pour déverrouiller ce téléphone ?',bioon:'Le déverrouillage biométrique est activé sur ce téléphone',biooff:'Désactiver',bioen:'Activer Face ID / empreinte',nobio:'La biométrie n’est pas disponible sur ce téléphone ou navigateur.',lockn:'Verrouiller',autol:'Verrouillage auto',imm:'Immédiatement',m1:'Après 1 minute',m5:'Après 5 minutes',m15:'Après 15 minutes',never:'Jamais',curc:'Code actuel',newc:'Nouveau code (6 chiffres)',chg:'Changer le code',signed:'Connecté en tant que',secn:'Chaque personne a un code à 6 chiffres qui l’identifie et verrouille l’appli sur ce téléphone. La vraie protection des données vient de votre code famille secret : gardez-le privé.',chgd:'Code modifié.',back:'Retour',conn:'Connexion…'});
+S.pin??={};
+let UNL=false,SYNCED=!CL(),BIOK=false,LS={step:'pick',m:'',buf:'',first:'',msg:''},hidT=0;
+const b64=u=>btoa(String.fromCharCode(...u)),unb64=x=>Uint8Array.from(atob(x),c=>c.charCodeAt(0));
+async function hashPin(pin,salt){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pin),'PBKDF2',false,['deriveBits']);return b64(new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',salt,iterations:150000,hash:'SHA-256'},k,256)))}
+const getBio=()=>{try{return JSON.parse(localStorage.getItem('garvey-bio'))}catch(e){return null}};
+async function bioEnroll(m){const cr=await navigator.credentials.create({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),rp:{name:'Garvey Family Hub',id:location.hostname},user:{id:crypto.getRandomValues(new Uint8Array(16)),name:MM[m].n,displayName:MM[m].n},pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'discouraged'},timeout:60000}});localStorage.setItem('garvey-bio',JSON.stringify({m,id:b64(new Uint8Array(cr.rawId))}))}
+async function bioAuth(){const b=getBio();if(!b)return false;try{await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),rpId:location.hostname,allowCredentials:[{type:'public-key',id:unb64(b.id),transports:['internal']}],userVerification:'required',timeout:60000}});return b.m}catch(e){return false}}
+if(window.PublicKeyCredential&&PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable)PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable().then(v=>{BIOK=!!v;lockRender()}).catch(()=>{});
+const fails=()=>{try{return JSON.parse(localStorage.getItem('garvey-fails'))||{n:0,until:0}}catch(e){return {n:0,until:0}}};
+function lockRender(){const e=$('#lock');if(!e||UNL)return;const b=getBio(),st=LS.step;let h=`<div style="max-width:340px;margin:0 auto;padding:calc(24px + env(safe-area-inset-top,0px)) 8px 24px;text-align:center"><div style="font-size:48px">🏡</div><h1 style="margin:4px 0 14px">${esc(t('ti'))}</h1>`;
+ if(!SYNCED)h+=`<p style="color:var(--mu)">${t('conn')}</p>`;
+ else if(st==='pick'){if(b&&BIOK&&S.pin[b.m])h+=`<button class="p" data-l="bio" style="width:100%;padding:14px;margin-bottom:12px">🔓 ${t('bio')}<br><small>${MM[b.m].n}</small></button>`;
+  h+=`<b>${t('whoami')}</b><div class="chips row" style="justify-content:center;margin-top:10px">${M.map(m=>`<button data-l="who" data-m="${m.id}" style="border-color:${m.c};padding:8px 14px">${av(m)}${m.n}</button>`).join('')}</div>`}
+ else{const ttl=st==='pin'?t('enter'):st==='new1'?t('create'):t('repeat');
+  h+=`<div style="margin-bottom:6px">${av(MM[LS.m])}<b>${MM[LS.m].n}</b></div><div>${ttl}</div><div style="font-size:30px;letter-spacing:8px;margin:12px 0">${'●'.repeat(LS.buf.length)}${'○'.repeat(6-LS.buf.length)}</div><div style="color:#dc2626;min-height:22px">${esc(LS.msg)}</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0">${[1,2,3,4,5,6,7,8,9,'',0,'⌫'].map(k=>k===''?'<span></span>':`<button data-l="k" data-v="${k}" style="font-size:24px;border-radius:50%;aspect-ratio:1">${k}</button>`).join('')}</div><div class="row" style="justify-content:space-between"><button class="x" data-l="back">‹ ${t('back')}</button>${st==='pin'?`<button class="x" data-l="forgot">${t('forgot')}</button>`:''}</div>`}
+ e.innerHTML=h+'</div>'}
+function unlock(m,q){UNL=true;if(!localStorage.getItem('garvey-notrust'))localStorage.setItem('garvey-trust',m);ME=m;localStorage.setItem('garvey-me',m);document.body.classList.add('ok');$('#lock').style.display='none';LS={step:'pick',m:'',buf:'',first:'',msg:''};
+ if(!q&&BIOK&&!getBio()&&!localStorage.getItem('garvey-bionever')){if(confirm(t('bioask')))bioEnroll(m).catch(()=>{});else localStorage.setItem('garvey-bionever','1')}
+ render();if(SHARE)startWatch();pullMsgs()}
+function lock(){UNL=false;document.body.classList.remove('ok');$('#lock').style.display='block';LS={step:'pick',m:'',buf:'',first:'',msg:''};lockRender()}
+async function lsubmit(){const buf=LS.buf,m=LS.m;LS.buf='';
+ if(LS.step==='pin'){const f=fails(),w=Math.ceil((f.until-Date.now())/1e3);if(w>0){LS.msg=t('waitn').replace('{n}',w);return lockRender()}
+  const p=S.pin[m];if(p&&await hashPin(buf,unb64(p.s))===p.h){localStorage.removeItem('garvey-fails');return unlock(m)}
+  f.n++;if(f.n>=5)f.until=Date.now()+Math.min(300,30*2**(f.n-5))*1e3;localStorage.setItem('garvey-fails',JSON.stringify(f));LS.msg=t('wrong')}
+ else if(LS.step==='new1'){LS.first=buf;LS.step='new2';LS.msg=''}
+ else{if(buf!==LS.first){LS.step='new1';LS.msg=t('mism')}else{const salt=crypto.getRandomValues(new Uint8Array(16));S.pin[m]={s:b64(salt),h:await hashPin(buf,salt)};save();return unlock(m)}}
+ lockRender()}
+function lkey(v){if(LS.buf.length>=6&&v!=='⌫')return;LS.buf=v==='⌫'?LS.buf.slice(0,-1):LS.buf+v;LS.msg='';lockRender();if(LS.buf.length===6)setTimeout(lsubmit,80)}
+$('#lock').addEventListener('click',async e=>{const a=e.target.closest('[data-l]');if(!a)return;const k=a.dataset.l;
+ if(k==='k')lkey(a.dataset.v);
+ if(k==='who'){LS={step:S.pin[a.dataset.m]?'pin':'new1',m:a.dataset.m,buf:'',first:'',msg:''};lockRender()}
+ if(k==='back'){LS={step:'pick',m:'',buf:'',first:'',msg:''};lockRender()}
+ if(k==='bio'){const m=await bioAuth();if(m&&S.pin[m])unlock(m)}
+ if(k==='forgot'){const c=CL();if(!c){alert(t('fgno'));return}const x=prompt(t('fgc'));if(x===null)return;if(x.trim()===c.code){delete S.pin[LS.m];save();LS={step:'new1',m:LS.m,buf:'',first:'',msg:''};lockRender()}else alert(t('fgbad'))}});
+document.addEventListener('keydown',e=>{if(UNL||!SYNCED||!/^(pin|new1|new2)$/.test(LS.step))return;if(/^\d$/.test(e.key))lkey(e.key);else if(e.key==='Backspace')lkey('⌫')});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)hidT=Date.now();else if(UNL){const lm=+(localStorage.getItem('garvey-lockmin')??-1);if(lm>=0&&Date.now()-hidT>=lm*6e4)lock()}});
+const _ar=applyRemote;applyRemote=function(x){_ar(x);S.pin??={};SYNCED=true;if(UNL&&ME&&!S.pin[ME])lock();lockRender()};
+setTimeout(()=>{SYNCED=true;lockRender()},5000);
+function vSec(){const b=getBio(),lm=localStorage.getItem('garvey-lockmin')??'-1';
+ return `<div class="card"><b>${t('signed')}: ${esc(MM[ME]?MM[ME].n:'')}</b><p style="color:var(--mu);margin-bottom:0">${t('secn')}</p></div>
+ <div class="card"><label><input type="checkbox" data-a="trust" ${localStorage.getItem('garvey-notrust')?'':'checked'}> <b>${t('remember')}</b></label><br><small style="color:var(--mu)">${t('rememberh')}</small></div>
+ <div class="card"><div class="row sp"><b>${t('autol')}</b><select data-lm="1">${[['0','imm'],['1','m1'],['5','m5'],['15','m15'],['-1','never']].map(([v,k])=>`<option value="${v}"${v===lm?' selected':''}>${t(k)}</option>`).join('')}</select></div><div class="row" style="margin-top:10px"><button data-a="lockn">🔒 ${t('lockn')}</button></div></div>
+ <div class="card">${BIOK?(b?`<b>✅ ${t('bioon')}</b> (${MM[b.m].n})<div class="row" style="margin-top:8px"><button data-a="biooff">${t('biooff')}</button></div>`:`<button class="p" data-a="bioen">🔓 ${t('bioen')}</button>`):`<small style="color:var(--mu)">${t('nobio')}</small>`}</div>
+ <form class="card" data-f="chpin"><b>${t('chg')}</b><input name="o" type="password" inputmode="numeric" pattern="\\d{6}" maxlength="6" placeholder="${t('curc')}" required style="margin-top:8px"><input name="n" type="password" inputmode="numeric" pattern="\\d{6}" maxlength="6" placeholder="${t('newc')}" required style="margin-top:8px"><button class="p" style="margin-top:8px">${t('save')}</button></form>`}
+Object.assign(A,{trust:()=>{if(localStorage.getItem('garvey-notrust')){localStorage.removeItem('garvey-notrust');localStorage.setItem('garvey-trust',ME)}else{localStorage.setItem('garvey-notrust','1');localStorage.removeItem('garvey-trust')}},me:()=>{lock()},lockn:()=>{lock()},bioen:()=>{bioEnroll(ME).then(()=>{localStorage.removeItem('garvey-bionever');render()}).catch(()=>{})},biooff:()=>{localStorage.removeItem('garvey-bio')}});
+document.addEventListener('change',e=>{if(e.target.dataset.lm!==undefined)localStorage.setItem('garvey-lockmin',e.target.value)});
+document.addEventListener('submit',async e=>{if(e.target.dataset.f!=='chpin')return;const v=new FormData(e.target),p=S.pin[ME];if(!p||await hashPin(v.get('o'),unb64(p.s))!==p.h){alert(t('wrong'));return}
+ const salt=crypto.getRandomValues(new Uint8Array(16));S.pin[ME]={s:b64(salt),h:await hashPin(v.get('n'),salt)};save();alert(t('chgd'));render()});
+const tm=localStorage.getItem('garvey-trust');if(tm&&MM[tm]&&S.pin[tm]&&!localStorage.getItem('garvey-notrust'))unlock(tm,true);else lockRender();
 </script></body></html>

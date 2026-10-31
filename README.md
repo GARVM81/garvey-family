@@ -61,6 +61,7 @@ Edit `index.html`, commit, push. Use Issues for bugs and ideas, and Pull Request
 | House | Maintenance, equipment and warranties, documents (More → House) |
 | Money | Shared expenses, monthly budget, bills (More → Money / Bills) |
 | Family map | More → Map: each person opts in to share their location on one shared map (Supabase) |
+| Access control | Lock screen with a personal 6-digit code per person, Face ID / fingerprint, auto-lock (More → Security) |
 | Quick assistant | Home → Quick add, e.g. "add milk to shopping" (rule-based, not cloud AI) |
 | GitHub | This repository: issues, releases, Actions |
 
@@ -70,5 +71,12 @@ Connect each system to Home Assistant using its built-in integration (UniFi Netw
 ## Weather
 Uses the free Open-Meteo service. Default location is Lavaur. Change it with `localStorage.setItem('garvey-geo', JSON.stringify({lat:43.7,lon:1.82,n:'Lavaur'}))`.
 
+## Access and security
+- Each person creates a 6-digit code on first launch. Codes are stored hashed (PBKDF2) and sync to the family's other phones.
+- The code is asked once per phone; the device is then remembered (turn this off in More → Security to ask every time).
+- Face ID / fingerprint uses WebAuthn on the phone. It is an app lock for that phone only.
+- Wrong codes are delayed after 5 attempts. The app auto-locks after the chosen time in the background.
+- Honest limits: this is a lock on the page, not server-side accounts. Data is protected by the secret family code and Supabase, so keep that code private. For real per-person accounts, use Supabase Auth (roadmap).
+
 ## Roadmap
-Push notifications when the app is closed (server needed), real AI assistant through a server function, Firebase chat, per-person logins, energy charts, meal recipes, shared photo albums.
+Supabase Auth accounts with server-side rules, push notifications when the app is closed (server needed), real AI assistant through a server function, Firebase chat, per-person logins, energy charts, meal recipes, shared photo albums.
