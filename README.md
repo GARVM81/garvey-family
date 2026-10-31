@@ -72,6 +72,7 @@ Connect each system to Home Assistant using its built-in integration (UniFi Netw
 Uses the free Open-Meteo service. Default location is Lavaur. Change it with `localStorage.setItem('garvey-geo', JSON.stringify({lat:43.7,lon:1.82,n:'Lavaur'}))`.
 
 ## Access and security
+- An **app access code** is asked once per phone, before anything else. The page stores only a scrambled hash of it, never the code itself. To change the code, generate a new salt and hash (ask Claude) and replace `APPSALT` and `APPHASH` in `index.html`; every phone will then ask for the new code once.
 - Each person creates a 6-digit code on first launch. Codes are stored hashed (PBKDF2) and sync to the family's other phones.
 - The code is asked once per phone; the device is then remembered (turn this off in More → Security to ask every time).
 - Face ID / fingerprint uses WebAuthn on the phone. It is an app lock for that phone only.

@@ -1,4 +1,6 @@
 # Changelog
+## 2.4.0
+- App access code required once per phone before the name and personal code screens
 ## 2.3.1
 - Remember this device: code asked once per phone
 ## 2.3.0
