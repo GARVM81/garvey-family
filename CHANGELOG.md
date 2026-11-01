@@ -1,4 +1,6 @@
 # Changelog
+## 2.5.0
+- New modern look: rounded theme, gradient hero, floating tab bar, softer cards, refreshed lock screen, dark mode
 ## 2.4.0
 - App access code required once per phone before the name and personal code screens
 ## 2.3.1

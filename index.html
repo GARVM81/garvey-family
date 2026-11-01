@@ -2,42 +2,67 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Garvey Family Hub</title>
-<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Garvey"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#1d4ed8"><link rel="apple-touch-icon" href="icon.png"><link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Garvey"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#0B7C8E"><link rel="apple-touch-icon" href="icon.png"><link rel="manifest" href="manifest.json">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏡</text></svg>">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
 <style>
 body:not(.ok) .w,body:not(.ok) nav,body:not(.ok) #wallv{display:none!important}
-:root{--bg:#f7f5f0;--card:#fff;--tx:#1f2430;--mu:#6b7280;--bd:#e5e1d8;--ac:#1d4ed8;--act:#fff;--pub:#fde2e2;--sch:#dff3e7}
-@media(prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--tx:#eceef2;--mu:#9aa1ae;--bd:#2d313b;--ac:#7aa2ff;--act:#10131a;--pub:#4a2326;--sch:#1c3a2c}}
-*{box-sizing:border-box}
+:root{--bg:#EDF1F8;--card:#fff;--soft:#F0F3F9;--tx:#16203A;--mu:#65708B;--bd:#E2E7F0;--ac:#0B7C8E;--ac2:#2447C7;--act:#fff;--pub:#FFE1DE;--sch:#D6F1E4;--sh:0 1px 2px rgba(22,32,58,.05),0 10px 26px -14px rgba(22,32,58,.22);--r:20px}
+@media(prefers-color-scheme:dark){:root{--bg:#0A1120;--card:#131B2F;--soft:#1B2540;--tx:#EAF0FF;--mu:#94A1BD;--bd:#23304F;--ac:#37C6D8;--ac2:#4F8CFF;--act:#06202A;--pub:#47222E;--sch:#153A2E;--sh:0 1px 2px rgba(0,0,0,.4),0 12px 30px -16px rgba(0,0,0,.8)}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top,0px) 0 calc(76px + env(safe-area-inset-bottom,0px))}
-.w{max-width:900px;margin:0 auto;padding:14px}
-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-h1{font-size:22px;margin:0}h2{font-size:17px;margin:18px 0 8px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:12px}
-button,input,select,textarea{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:8px 10px;max-width:100%}
-button{cursor:pointer}button.p{background:var(--ac);color:var(--act);border-color:var(--ac)}
-button.x{border:0;background:none;color:var(--mu);padding:4px 8px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top,0px) 0 calc(104px + env(safe-area-inset-bottom,0px))}
+.w{max-width:900px;margin:0 auto;padding:12px 14px}
+header{display:flex;justify-content:space-between;align-items:center;margin:4px 2px 14px}
+h1{font-size:21px;font-weight:800;letter-spacing:-.02em;margin:0;white-space:nowrap}#lg{white-space:nowrap;padding:6px 12px;font-size:13px;border-radius:99px;background:var(--card);box-shadow:var(--sh)}h2{font-size:18px;font-weight:700;letter-spacing:-.01em;margin:22px 2px 10px}
+.card{background:var(--card);border-radius:var(--r);padding:16px;margin-bottom:14px;box-shadow:var(--sh)}
+button,input,select,textarea{font:inherit;color:var(--tx);background:var(--soft);border:1.5px solid transparent;border-radius:14px;padding:10px 14px;max-width:100%;transition:border-color .15s,background .15s,transform .1s}
+button{cursor:pointer;font-weight:600}button:active{transform:scale(.96)}
+button.p{background:var(--ac);color:var(--act)}
+button.x{background:none;color:var(--mu);padding:4px 8px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ac);background:var(--card)}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--ac) 55%,transparent);outline-offset:2px}
+input[type=checkbox]{width:21px;height:21px;padding:0;accent-color:var(--ac);flex:none}
+input[type=text],input:not([type]),textarea{width:100%}
+label{font-size:14px;color:var(--mu)}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.sp{justify-content:space-between}
-.chips button{border-radius:99px;padding:4px 10px;font-size:14px}
-.chips button.off{opacity:.35}
-.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
-.dh{font-size:12px;color:var(--mu);text-align:center}
-.d{min-height:62px;border:1px solid var(--bd);border-radius:8px;padding:3px;font-size:11px;overflow:hidden;cursor:pointer;background:var(--card)}
-.d b{font-size:13px}.d.o{opacity:.45}.d.pub{background:var(--pub)}.d.sch{background:var(--sch)}
-.d.t b{background:var(--ac);color:var(--act);border-radius:99px;padding:0 6px}.d.s{outline:2px solid var(--ac)}
-.e{border-left:3px solid;padding-left:3px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.av{width:20px;height:20px;border-radius:50%;object-fit:cover;vertical-align:-5px;margin-right:4px}.avl{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 6px;background:var(--bd)}.st{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}.st>div{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:10px}.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}.tile{text-align:left;padding:12px;border-radius:14px;position:relative}.tile.on{background:var(--ac);color:var(--act);border-color:var(--ac)}.tile span{font-size:24px;display:block}.bub{max-width:82%;padding:8px 10px;border-radius:14px;margin:4px 0;background:var(--bg);border:1px solid var(--bd)}.bub.me{margin-left:auto;background:var(--ac);color:var(--act);border-color:var(--ac)}.wg{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:12px}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:3px}
-.b{display:inline-block;border-radius:99px;padding:1px 8px;font-size:12px;color:#fff;margin-right:3px}
-.lg span{font-size:12px;margin-right:10px;color:var(--mu)}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px}
-.li{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)}.li:last-child{border:0}.li .g{flex:1}
+.chips button{border-radius:99px;padding:5px 11px;font-size:13px;border:1.5px solid var(--bd);background:var(--card)}
+.chips button.p{background:var(--ac);color:var(--act);border-color:var(--ac)}.chips button.off{opacity:.35}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.dh{font-size:12px;font-weight:600;color:var(--mu);text-align:center}
+.d{min-height:64px;border-radius:12px;background:var(--soft);padding:4px 5px;font-size:11px;overflow:hidden;cursor:pointer}
+.d b{font-size:13px}.d.o{opacity:.4}.d.pub{background:var(--pub)}.d.sch{background:var(--sch)}
+.d.t b{background:var(--ac);color:var(--act);border-radius:99px;padding:1px 7px}.d.s{box-shadow:inset 0 0 0 2px var(--ac)}
+.e{border-left:3px solid;padding:1px 4px;margin-top:3px;border-radius:5px;background:var(--card);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px}
+.b{display:inline-block;border-radius:99px;padding:2px 10px;font-size:12px;font-weight:600;color:#fff;margin:2px 3px 0 0}
+.lg span{font-size:12px;margin-right:12px;color:var(--mu)}.lg i{display:inline-block;width:12px;height:12px;border-radius:4px;vertical-align:-2px;margin-right:4px}
+.li{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd)}.li:last-child{border:0}.li .g{flex:1}
 .done .g{text-decoration:line-through;color:var(--mu)}
-nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
-nav button{flex:1;border:0;background:none;font-size:12px;color:var(--mu);padding:4px}nav button.a{color:var(--ac);font-weight:600}nav span{display:block;font-size:20px}
-input[type=text],input:not([type]),textarea{width:100%}.f{flex:1;min-width:120px}
+nav{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));max-width:560px;margin:0 auto;display:flex;gap:2px;padding:6px;border-radius:28px;background:color-mix(in srgb,var(--card) 84%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5);box-shadow:0 12px 32px -10px rgba(22,32,58,.35),0 0 0 1px var(--bd)}
+nav button{flex:1;border:0;background:none;border-radius:22px;font-size:11px;font-weight:600;color:var(--mu);padding:7px 2px}
+nav button.a{background:var(--ac);color:var(--act)}nav span{display:block;font-size:21px;line-height:1.15}
+.f{flex:1;min-width:120px}
 .big{font-size:28px;font-weight:700}
-@media(max-width:560px){.d{min-height:52px}.e{font-size:10px}}
+.hero{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border-radius:26px;padding:20px;box-shadow:0 18px 34px -18px var(--ac2)}
+:root{--hg:#0B7C8E}@media(prefers-color-scheme:dark){.hero{background:linear-gradient(135deg,#0E6A78,#27489F);color:#fff}}
+.st{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}.st>div{background:var(--card);border-radius:18px;padding:12px 14px;box-shadow:var(--sh)}.st b{font-size:20px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px}
+.tile{text-align:left;padding:14px;border-radius:20px;position:relative;background:var(--card);box-shadow:var(--sh);border:0}
+.tile span{font-size:26px;display:block;margin-bottom:4px}.tile small{color:var(--mu);font-weight:500}
+.tile.on{background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--act);box-shadow:0 12px 24px -12px var(--ac2)}.tile.on small{color:inherit;opacity:.85}
+.bub{max-width:82%;padding:9px 13px;border-radius:18px 18px 18px 6px;margin:5px 0;background:var(--soft)}
+.bub.me{margin-left:auto;border-radius:18px 18px 6px 18px;background:var(--ac);color:var(--act)}
+.av{width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:-6px;margin-right:5px}
+.avl{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 6px;background:var(--bd)}
+.wg{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:14px}
+#lock{background:linear-gradient(160deg,#0A1B3D,#0B7C8E 85%)!important;color:#fff!important}
+#lock button{background:rgba(255,255,255,.14);color:#fff;border:0}#lock button.p{background:#fff;color:#0A3350}#lock button.x{background:none}
+#lock input{background:rgba(255,255,255,.14);color:#fff;border:0}#lock input::placeholder{color:rgba(255,255,255,.55)}
+#lock small,#lock p{color:rgba(255,255,255,.78)!important}#lock div[style*="#dc2626"]{color:#FFC1C1!important}
+#lock .chips button{border:1.5px solid rgba(255,255,255,.35)!important}
+@media(max-width:560px){.d{min-height:54px}.e{font-size:10px}.w{padding:10px 12px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}button:active{transform:none}}
 </style></head>
 <body><div id="lock" style="position:fixed;inset:0;z-index:100;background:var(--bg);overflow:auto;color:var(--tx)"></div><div class="w"><header><h1 id="ti"></h1><button id="lg"></button></header><div id="app"></div></div><nav id="nav"></nav>
 <script>
@@ -217,7 +242,7 @@ if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(
 cloudInit();save();render();notify();setInterval(notify,3e5);document.addEventListener('visibilitychange',()=>{if(!document.hidden)notify()});
 </script>
 <script>
-const VER='2.4.0';
+const VER='2.5.0';
 Object.assign(T.en,{home:'Home',chat:'Chat',lists:'Lists',dev:'About',sh:'Smart home',buy:'to buy',left:'chores left',tonight:'Tonight',nop:'Not planned',demo:'Demo mode. Connect Home Assistant (⚙️) to control your real devices.',hurl:'Home Assistant URL (https://…)',htok:'Long-lived access token',hoff:'Disconnect',hbad:'Cannot reach Home Assistant. Check the URL, token and CORS settings.',hh:'Needs an https address (Nabu Casa, Cloudflare Tunnel or Tailscale) and this site added to cors_allowed_origins. The token stays on this phone only.',adddv:'Add device',ent:'Entity ID (e.g. light.salon)',ctl:'Control',sen:'Sensor',whoami:'Who are you?',msg:'Message…',send:'Send',needsb:'Chat needs Supabase sync: open More → Sync, set it up and run the updated SQL.',inv:'Invite on WhatsApp',repo:'GitHub repository URL (https://github.com/…)',bug:'Report a bug',idea:'Suggest an idea',devh:'Family super app: calendar, chat, smart home and more. Code and ideas live on GitHub.',gm:'Good morning',ga:'Good afternoon',ge:'Good evening',big:'Too long. Try a shorter one.',nomsg:'No messages yet. Say hello 👋',agenda:'Today'});
 Object.assign(T.fr,{home:'Maison',chat:'Messages',lists:'Listes',dev:'À propos',sh:'Maison connectée',buy:'à acheter',left:'tâches restantes',tonight:'Ce soir',nop:'Pas prévu',demo:'Mode démo. Connectez Home Assistant (⚙️) pour piloter vos vrais appareils.',hurl:'URL Home Assistant (https://…)',htok:'Jeton d’accès longue durée',hoff:'Déconnecter',hbad:'Home Assistant est injoignable. Vérifiez l’URL, le jeton et les réglages CORS.',hh:'Il faut une adresse https (Nabu Casa, Cloudflare Tunnel ou Tailscale) et ce site ajouté à cors_allowed_origins. Le jeton reste sur ce téléphone uniquement.',adddv:'Ajouter un appareil',ent:'ID d’entité (ex. light.salon)',ctl:'Commande',sen:'Capteur',whoami:'Qui êtes-vous ?',msg:'Message…',send:'Envoyer',needsb:'Les messages nécessitent la synchro Supabase : ouvrez Plus → Synchro, configurez-la et exécutez le SQL mis à jour.',inv:'Inviter sur WhatsApp',repo:'URL du dépôt GitHub (https://github.com/…)',bug:'Signaler un bug',idea:'Proposer une idée',devh:'Super appli famille : agenda, messages, maison connectée et plus. Le code et les idées sont sur GitHub.',gm:'Bonjour',ga:'Bon après-midi',ge:'Bonsoir',big:'Trop long. Essayez plus court.',nomsg:'Pas encore de messages. Dites bonjour 👋',agenda:'Aujourd’hui'});
 const SL={en:{on:'On',off:'Off',locked:'Locked',unlocked:'Unlocked',open:'Open',closed:'Closed',armed_away:'Armed',disarmed:'Off'},fr:{on:'Allumé',off:'Éteint',locked:'Verrouillée',unlocked:'Déverrouillée',open:'Ouvert',closed:'Fermé',armed_away:'Armée',disarmed:'Désarmée'}};
@@ -229,7 +254,7 @@ const isOn=d=>{const s=st(d),o=dom(d.e);return o==='lock'?s==='locked':o==='cove
 function tileVal(d){if(d.k==='cam')return HA()?'':'Demo';if(!HA())return d.k==='sn'?d.st+(d.u?' '+d.u:''):(SL[S.lang][d.st]||d.st);const x=HS[d.e];if(!x)return '…';if(d.k==='sn'){const c=dom(d.e)==='climate'&&x.t!=null;return (c?x.t:x.s)+(x.u?' '+x.u:c?' °':'')}return SL[S.lang][x.s]||x.s}
 async function haPoll(){const h=HA();if(!h||tab!=='home'||document.hidden)return;try{const r=await fetch(h.url.replace(/\/$/,'')+'/api/states',{headers:{Authorization:'Bearer '+h.tok}});if(!r.ok)throw 0;const a=await r.json();HS={};a.forEach(x=>{HS[x.entity_id]={s:x.state,u:x.attributes.unit_of_measurement||'',t:x.attributes.current_temperature}});HERR=0;for(const d of S.dev.filter(x=>x.k==='cam')){try{const q=await fetch(h.url.replace(/\/$/,'')+'/api/camera_proxy/'+d.e,{headers:{Authorization:'Bearer '+h.tok}});if(q.ok){if(CAMS[d.e])URL.revokeObjectURL(CAMS[d.e]);CAMS[d.e]=URL.createObjectURL(await q.blob())}}catch(e){}}}catch(e){HERR=1}if(tab==='home')safeRender()}
 function vHome(){const te=evs(today),tn=S.din[today]||{},cur=schH(today),nx=SCH.find(r=>r[0]>today);
- return banner()+`<div class="card"><div class="row sp"><div><div style="font-size:21px;font-weight:700">${greet()}${ME?', '+MM[ME].n:''} 👋</div><small style="color:var(--mu);text-transform:capitalize">${fmt(today,{weekday:'long',day:'numeric',month:'long'})}</small></div>${ME?`<img class="avl" style="margin:0;width:48px;height:48px;${S.ph[ME]?'':'display:none'}" src="${S.ph[ME]||''}" alt="">`:''}</div></div>
+ return banner()+`<div class="card hero"><div class="row sp"><div><div style="font-size:26px;font-weight:800;letter-spacing:-.02em">${greet()}${ME?', '+MM[ME].n:''} 👋</div><small style="opacity:.85;text-transform:capitalize">${fmt(today,{weekday:'long',day:'numeric',month:'long'})}</small></div>${ME?`<img class="avl" style="margin:0;width:48px;height:48px;${S.ph[ME]?'':'display:none'}" src="${S.ph[ME]||''}" alt="">`:''}</div></div>
  <div class="st"><div>🛒 <b>${S.shop.filter(i=>!i.done).length}</b> ${t('buy')}</div><div>🧹 <b>${S.ch.filter(c=>!c.done).length}</b> ${t('left')}</div><div>🍽️ <b>${t('tonight')}</b><br><small>${tn.m?esc(tn.m):t('nop')}</small></div><div>🏖️ <small>${cur?t('on')+' '+fmt(cur[1],{day:'numeric',month:'short'}):nx?LN(nx,2)+' · '+t('in')+' '+dd(nx[0])+' '+t('days'):''}</small></div></div>
  ${dueCard()}<div class="card"><b>📅 ${t('agenda')}</b>${te.slice(0,6).map(e=>`<div class="li"><span class="g">${e.time?esc(e.time)+' · ':''}${esc(e.title)}</span>${badge(e.m)}</div>`).join('')||`<p style="color:var(--mu);margin:6px 0 0">${t('nothing')}</p>`}</div>
  <div class="row sp"><h2>🏡 ${t('sh')}</h2><span class="row"><button data-a="hedit">✏️</button><button data-a="hset">⚙️</button></span></div>
@@ -374,7 +399,7 @@ async function appSubmit(){const el=$('#ac');if(!el)return;let f;try{f=JSON.pars
  f.n++;if(f.n>=5)f.until=Date.now()+Math.min(600,30*2**(f.n-5))*1e3;localStorage.setItem('garvey-afails',JSON.stringify(f));LS.msg=t('badapp');lockRender()}
 $('#lock').addEventListener('input',e=>{if(e.target.id==='ac'){const v=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,12);e.target.value=v.replace(/(.{4})(?=.)/g,'$1-')}});
 document.addEventListener('keydown',e=>{if(e.target.id==='ac'&&e.key==='Enter')appSubmit()});
-function lockRender(){const e=$('#lock');if(!e||UNL)return;const b=getBio(),st=LS.step;let h=`<div style="max-width:340px;margin:0 auto;padding:calc(24px + env(safe-area-inset-top,0px)) 8px 24px;text-align:center"><div style="font-size:48px">🏡</div><h1 style="margin:4px 0 14px">${esc(t('ti'))}</h1>`;
+function lockRender(){const e=$('#lock');if(!e||UNL)return;const b=getBio(),st=LS.step;let h=`<div style="max-width:340px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;justify-content:center;padding:calc(24px + env(safe-area-inset-top,0px)) 8px 24px;text-align:center"><div style="font-size:48px">🏡</div><h1 style="margin:4px 0 14px">${esc(t('ti'))}</h1>`;
  if(!appOK())h+=appForm();
  else if(!SYNCED)h+=`<p style="color:var(--mu)">${t('conn')}</p>`;
  else if(st==='pick'){if(b&&BIOK&&S.pin[b.m])h+=`<button class="p" data-l="bio" style="width:100%;padding:14px;margin-bottom:12px">🔓 ${t('bio')}<br><small>${MM[b.m].n}</small></button>`;
